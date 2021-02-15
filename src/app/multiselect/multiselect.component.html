@@ -1,0 +1,18 @@
+<!--<label for="text-input">Text Input</label>-->
+<div class="container" (appOutsideClick)="closeDropdown()">
+  <div class="input" id="text-input">
+
+      <div class="item-sel" *ngFor="let selectedItem of selectedItems$ | async">
+        <span>{{selectedItem.name}}</span>
+        <span (click)="removeItem(selectedItem)" class="remove">&#10005;</span>
+      </div>
+
+    <input class="text-input" type="text" [formControl]="searchInput" (click)="openDropDown()"  />
+  </div>
+  <ul class="selection-list" *ngIf="(dropDownState$ | async) === dropDown.OPEN">
+    <li *ngFor="let item of filteredItems$ | async" (click)="selectItem(item)" [class.disabled]="item.id | mapper: checkIfSelectedFn | async">
+      {{item.name}}
+    </li>
+  </ul>
+</div>
+
